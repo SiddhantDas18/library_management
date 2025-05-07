@@ -15,7 +15,7 @@ export async function POST(req:NextRequest) {
 
         const findUser = await prismaClient.users.findFirst({
             where:{
-                username:username
+                username: username
             }
         })
     
@@ -34,7 +34,7 @@ export async function POST(req:NextRequest) {
             })
         }
 
-        const id= findUser?.id
+        const id = findUser?.id
 
         const token = jwt.sign({
             id

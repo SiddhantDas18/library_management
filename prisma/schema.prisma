@@ -16,8 +16,8 @@ datasource db {
 
 model Users{
   id            Int     @id @default(autoincrement()) @unique
-  username      String
-  email         String
+  username      String  @unique
+  email         String  @unique
   password      String
   role          String  
   borrowed      Borrowed[]  
@@ -41,11 +41,10 @@ model Borrowed{
   borrowed_user   Int
   book_id         Int
   borrowed_date   Int
-  return_date     DateTime @unique
+  return_date     DateTime 
   Status          Boolean @default(false)
   user            Users   @relation(fields: [borrowed_user], references: [id])
   books           Books   @relation(fields: [book_id],references: [id])
-  transactions    Transactions[]
 }
 
 model Transactions{
@@ -59,5 +58,4 @@ model Transactions{
   Fine_amount       Int       @default(0)
   user              Users     @relation(fields: [user_id], references: [id])
   books             Books     @relation(fields: [book_id],references: [id])
-  borrowed          Borrowed  @relation(fields: [return_date], references: [return_date])
 }
