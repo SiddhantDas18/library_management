@@ -8,7 +8,7 @@ import prismaClient from "@/app/lib/db";
 export async function POST(req: NextRequest) {
 
     const request = await req.json();
-    const { user, password, email } = request;
+    const { username, password, email } = request;
     const hashedPassword = bcrypt.hash(password, 10)
     const role = "user"
 
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
         const check_user = await prismaClient.users.findFirst({
             where: {
-                username: user
+                username: username
             }
         })
         if (check_user) {
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
         const createUser = await prismaClient.users.create({
             data: {
-                username: user,
+                username: username,
                 password: await hashedPassword,
                 email: email,
                 role: role

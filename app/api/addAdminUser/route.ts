@@ -6,31 +6,30 @@ import prismaClient from "@/app/lib/db";
 
 
 export async function POST(req: NextRequest) {
-
-    const request = await req.json();
-    const { user, password ,email} = request;
-    const hashedPassword = bcrypt.hash(password, 10)
-    const role = "admin"
-
     try {
 
-        const check_user = await prismaClient.users.findMany({
-            where:{
-                username:user
+        const request = await req.json();
+        const { username, password, email } = request;
+        const hashedPassword = bcrypt.hash(password, 10)
+        const role = "admin"
+
+        const check_user = await prismaClient.users.findUnique({
+            where: {
+                username: username
             }
         })
-        if(check_user){
+        if (check_user) {
             return NextResponse.json({
-                msg:"User name already taken"
+                msg: "User name already taken"
             })
         }
 
         const createAdminUser = await prismaClient.users.create({
-            data:{
-                username:user,
+            data: {
+                username: username,
                 password: await hashedPassword,
-                email:email,
-                role:role
+                email: email,
+                role: role
             }
         })
 
@@ -41,7 +40,7 @@ export async function POST(req: NextRequest) {
 
     } catch (e) {
         return NextResponse.json({
-            error:(e as Error).toString()
+            error: (e as Error).toString()
         })
     }
 

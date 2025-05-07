@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../node_modules/generated/client"
 }
 
 datasource db {
@@ -29,9 +28,9 @@ model Books{
   title             String
   author            String
   ISBN              String
-  Published_year    Int
+  Published_year    String
   Copies_availabe   Int
-  Copies_Borrowed   Int
+  Copies_Borrowed   Int     @default(0)
   borrowed          Borrowed[]
   Transactions      Transactions[]
 }

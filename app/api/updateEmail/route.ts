@@ -12,7 +12,7 @@ export async function PATCH(req: NextRequest) {
 
         if (authentication.status == 401) {
             return NextResponse.json({
-                msg:authentication
+                authentication
             })
 
         }
@@ -35,7 +35,7 @@ export async function PATCH(req: NextRequest) {
 
         if(!findUser){
             return NextResponse.json({
-                msg1:"User Not found"
+                msg:"User Not found"
             })
         }
 
@@ -49,20 +49,20 @@ export async function PATCH(req: NextRequest) {
             })
 
             return NextResponse.json({
-                msg2:"Email updated successfully",
+                msg:"Email updated successfully",
                 updateEmail:updateEmail
             },{status:200})
 
         }catch(e){
 
             return NextResponse.json({
-                msg3:(e as Error).toString()
+                msg:(e as Error).toString()
             })
         }
 
     } catch (e) {
         return NextResponse.json({
-            msg4: (e as Error).toString()
+            msg: (e as Error).toString()
         })
     }
 
