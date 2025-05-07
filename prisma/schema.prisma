@@ -15,9 +15,49 @@ datasource db {
 }
 
 model Users{
-  id        Int    @id @default(autoincrement()) @unique
-  name      String
-  email     String
-  password  String
-  role      String
+  id            Int    @id @default(autoincrement()) @unique
+  name          String
+  email         String
+  password      String
+  role          String
+  borrowed      Borrowed[]
+  Transactions  Transactions[]
+}
+
+model Books{
+  id                Int @id @default(autoincrement()) @unique
+  title             String
+  author            String
+  ISBN              String
+  Published_year    Int
+  Copies_availabe   Int
+  Copies_Borrowed   Int
+  borrowed          Borrowed[]
+  Transactions      Transactions[]
+}
+
+model Borrowed{
+  id              Int @id @default(autoincrement()) @unique
+  borrowed_user   Int
+  book_id         Int
+  borrowed_date   Int
+  return_date     DateTime @unique
+  Status          Boolean @default(false)
+  user            Users   @relation(fields: [borrowed_user], references: [id])
+  books           Books   @relation(fields: [book_id],references: [id])
+  transactions    Transactions[]
+}
+
+model Transactions{
+  id                Int @id @default(autoincrement()) @unique
+  user_id           Int
+  book_id           Int
+  amount            Int
+  Transaction_Date  DateTime  @default(now())
+  return_date       DateTime  
+  Status            Boolean   @default(false)
+  Fine_amount       Int       @default(0)
+  user              Users     @relation(fields: [user_id], references: [id])
+  books             Books     @relation(fields: [book_id],references: [id])
+  borrowed          Borrowed  @relation(fields: [return_date], references: [return_date])
 }
