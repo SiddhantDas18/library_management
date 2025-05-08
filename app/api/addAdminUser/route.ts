@@ -3,8 +3,6 @@ import bcrypt from 'bcrypt'
 import prismaClient from "@/app/lib/db";
 
 
-
-
 export async function POST(req: NextRequest) {
     try {
 
